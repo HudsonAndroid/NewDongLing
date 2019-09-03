@@ -1,39 +1,41 @@
 package com.hudson.donglingmusic.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.hudson.donglingmusic.R;
+import com.hudson.donglingmusic.Utils.CommonUtils;
 import com.hudson.donglingmusic.Utils.ToastUtils;
 import com.hudson.donglingmusic.service.exception.PlayListEmptyException;
 import com.hudson.donglingmusic.service.playState.PlayStateHelper;
-import com.hudson.donglingplayer.IDongLingPlayer;
-import com.hudson.donglingplayer.IOnCompletionListener;
-import com.hudson.donglingplayer.IOnPreparedListener;
-import com.hudson.donglingplayer.SystemPlayer.SystemPlayer;
+import com.hudson.donglingplayer.AbsMediaPlayer;
+import com.hudson.donglingplayer.VLCPlayer.VlcPlayer;
+import com.hudson.donglingplayer.listener.PlayerStateListener;
 import com.hudson.musicentitylib.MusicEntity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Hudson on 2019/1/20.
  */
-public class MusicService extends Service implements IOnPreparedListener, IOnCompletionListener {
-    private IDongLingPlayer mPlayer;
+public class MusicService extends Service implements  PlayerStateListener {
+    private AbsMediaPlayer mPlayer;
     private final List<MusicEntity> mPlayList;
     private PlayStateHelper mStateHelper;
     private int mCurIndex = 0;
-    private IPrepareListener mPrepareListener;
 
     public MusicService(){
-        mPlayer = new SystemPlayer();
+        Context context = CommonUtils.getContext();
+        Log.e("hudson","对象为空?"+context);
+        mPlayer = new VlcPlayer(context);
+        mPlayer.setStateChangeListener(this);
         mPlayList = new ArrayList<>();
         mStateHelper = new PlayStateHelper();
     }
@@ -83,8 +85,8 @@ public class MusicService extends Service implements IOnPreparedListener, IOnCom
         mPlayer.play();
     }
 
-    public int pause(){
-        return mPlayer.pause();
+    public void pause(){
+        mPlayer.pause();
     }
 
     public void stop(){
@@ -98,43 +100,47 @@ public class MusicService extends Service implements IOnPreparedListener, IOnCom
             mPlayer.reset();
             String path = music.getPath();
             if(!TextUtils.isEmpty(path)){
-                try {
-                    mPlayer.setDataSource(path);
-                    prepare();
-                    mPlayer.setOnPreparedListener(this);
-                    mPlayer.setOnCompletionListener(this);
-                    mCurIndex = index;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                mPlayer.init(path);
+                mCurIndex = index;
             }else{
                 ToastUtils.showToast(R.string.play_source_not_exist);
             }
         }
     }
 
-    public void setPrepareListener(@NonNull IPrepareListener prepareListener) {
-        mPrepareListener = prepareListener;
-    }
+    @Override
+    public void mediaOpening() {
 
-    private void prepare(){
-        if(mPrepareListener != null){
-            mPrepareListener.onPrepareStart();
-        }
-        mPlayer.prepareAsync();
     }
 
     @Override
-    public void onPrepared() {
-        if(mPrepareListener != null){
-            mPrepareListener.onPrepareCompleted();
-        }
+    public void mediaStartReady() {
         mPlayer.play();
     }
 
     @Override
-    public void onComplete() {
+    public void mediaBuffering(float percent) {
+
+    }
+
+    @Override
+    public void onProgressPercentChange(float percent) {
+
+    }
+
+    @Override
+    public void onProgressTimeChange(long time) {
+
+    }
+
+    @Override
+    public void onEnd() {
         next();
+    }
+
+    @Override
+    public void onError(String msg) {
+
     }
 
     private class ExposeMethodEntity extends Binder implements IPlayerController{
@@ -151,8 +157,8 @@ public class MusicService extends Service implements IOnPreparedListener, IOnCom
             MusicService.this.play(index);
         }
 
-        public int pause(){
-            return MusicService.this.pause();
+        public void pause(){
+            MusicService.this.pause();
         }
 
         public void stop(){
@@ -167,10 +173,6 @@ public class MusicService extends Service implements IOnPreparedListener, IOnCom
             MusicService.this.pre();
         }
 
-        public void setPrepareListener(@NonNull IPrepareListener prepareListener){
-            MusicService.this.setPrepareListener(prepareListener);
-        }
-
         @Override
         public int getAudioSessionId() {
             return mPlayer.getAudioSessionId();
@@ -178,7 +180,7 @@ public class MusicService extends Service implements IOnPreparedListener, IOnCom
 
         @Override
         public void seekTo(int progress) {
-            mPlayer.seekTo(progress);
+            mPlayer.setTime(progress);
         }
 
         @Override
@@ -197,7 +199,7 @@ public class MusicService extends Service implements IOnPreparedListener, IOnCom
 
         @Override
         public int getCurProgress() {
-            return mPlayer.getCurProgress();
+            return (int)mPlayer.getTime();
         }
     }
 }

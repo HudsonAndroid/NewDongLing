@@ -83,24 +83,27 @@ public class PlayPageActivity extends Activity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mPlayerController = (IPlayerController) service;
-            mVisualizer = new Visualizer(mPlayerController.getAudioSessionId());
-            mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
-            //参数三是采样频率
-            mVisualizer.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
-                @Override
-                public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform,
-                                                  int samplingRate) {
+            int audioSessionId = mPlayerController.getAudioSessionId();
+            if(audioSessionId != -1){
+                mVisualizer = new Visualizer(audioSessionId);
+                mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+                //参数三是采样频率
+                mVisualizer.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
+                    @Override
+                    public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform,
+                                                      int samplingRate) {
 //                    mVisibleView.updateVisualizer(waveform);
-                }
+                    }
 
-                //这个回调采集的是快速傅里叶变换有关的数据,fft就是采集到的byte数据（频域波形图）
-                @Override
-                public void onFftDataCapture(Visualizer visualizer, byte[] fft,
-                                             int samplingRate) {
-                    mVisibleView.updateVisualizer(fft);
-                }
-            }, Visualizer.getMaxCaptureRate()/2, true, true);
-            mVisualizer.setEnabled(true);
+                    //这个回调采集的是快速傅里叶变换有关的数据,fft就是采集到的byte数据（频域波形图）
+                    @Override
+                    public void onFftDataCapture(Visualizer visualizer, byte[] fft,
+                                                 int samplingRate) {
+                        mVisibleView.updateVisualizer(fft);
+                    }
+                }, Visualizer.getMaxCaptureRate()/2, true, true);
+                mVisualizer.setEnabled(true);
+            }
             MusicEntity curMusic = mPlayerController.getCurMusic();
             if(curMusic != null){
                 String path = curMusic.getPath().replace(".mp3", ".lrc");

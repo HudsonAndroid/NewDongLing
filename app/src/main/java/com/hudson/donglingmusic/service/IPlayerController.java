@@ -1,6 +1,5 @@
 package com.hudson.donglingmusic.service;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.hudson.musicentitylib.MusicEntity;
@@ -17,15 +16,13 @@ public interface IPlayerController {
 
     void play(int index);
 
-    int pause();
+    void pause();
 
     void stop();
 
     void next();
 
     void pre();
-
-    void setPrepareListener(@NonNull IPrepareListener prepareListener);
 
     int getAudioSessionId();
 

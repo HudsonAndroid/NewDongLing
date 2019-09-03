@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../NewLyricsView/LyricsView/LyricsView.iml" filepath="$PROJECT_DIR$/../NewLyricsView/LyricsView/LyricsView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../DongLingPlayer/donglingplayer/DongLingPlayer-donglingplayer.iml" filepath="$PROJECT_DIR$/../DongLingPlayer/donglingplayer/DongLingPlayer-donglingplayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../NewCirlceVisibleMusicView/circlevisiblemusicview/NewCirlceVisibleMusicView-circlevisiblemusicview.iml" filepath="$PROJECT_DIR$/../NewCirlceVisibleMusicView/circlevisiblemusicview/NewCirlceVisibleMusicView-circlevisiblemusicview.iml" />
       <module fileurl="file://$PROJECT_DIR$/NewDongLing.iml" filepath="$PROJECT_DIR$/NewDongLing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/NewDongLing-app.iml" filepath="$PROJECT_DIR$/app/NewDongLing-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/musicentitylib/NewDongLing-musicentitylib.iml" filepath="$PROJECT_DIR$/musicentitylib/NewDongLing-musicentitylib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../NewLyricsView/LyricsView/NewLyricsView-LyricsView.iml" filepath="$PROJECT_DIR$/../NewLyricsView/LyricsView/NewLyricsView-LyricsView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../NewCirlceVisibleMusicView/circlevisiblemusicview/circlevisiblemusicview.iml" filepath="$PROJECT_DIR$/../NewCirlceVisibleMusicView/circlevisiblemusicview/circlevisiblemusicview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../DongLingPlayer/donglingplayer/donglingplayer.iml" filepath="$PROJECT_DIR$/../DongLingPlayer/donglingplayer/donglingplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/musicentitylib/musicentitylib.iml" filepath="$PROJECT_DIR$/musicentitylib/musicentitylib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projects-NewDongLing.iml" filepath="$PROJECT_DIR$/projects-NewDongLing.iml" />
     </modules>
   </component>
 </project>

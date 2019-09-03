@@ -1,5 +1,5 @@
 include ':app', ':musicentitylib',':donglingplayer',':circlevisiblemusicview',':LyricsView'
 
-project(':donglingplayer').projectDir = file("F:\\androidprojects\\DongLingPlayer\\donglingplayer")
-project(':circlevisiblemusicview').projectDir = file("F:\\androidprojects\\NewCirlceVisibleMusicView\\circlevisiblemusicview")
-project(':LyricsView').projectDir = file("F:\\androidprojects\\NewLyricsView\\LyricsView")
+project(':donglingplayer').projectDir = file("F:\\projects\\DongLingPlayer\\donglingplayer")
+project(':circlevisiblemusicview').projectDir = file("F:\\projects\\NewCirlceVisibleMusicView\\circlevisiblemusicview")
+project(':LyricsView').projectDir = file("F:\\projects\\NewLyricsView\\LyricsView")

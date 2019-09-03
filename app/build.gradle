@@ -28,6 +28,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':musicentitylib')
+//    implementation project(path: ':donglingplayer', configuration:'default')
+//    implementation project(path: ':circlevisiblemusicview', configuration:'default')
+//    implementation project(path: ':LyricsView', configuration:'default')
     implementation project(':donglingplayer')
     implementation project(':circlevisiblemusicview')
     implementation project(':LyricsView')
