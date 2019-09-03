@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_hot">热门</string>
+    <string name="home_local_music">本地音乐</string>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp"
+        android:text="动铃音乐"
+        android:textSize="19sp"
+        android:textColor="#ff2222"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.hudson.cirlcevisiblemusic.CircleVisibleView
+        android:id="@+id/cvv_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <!--<com.hudson.cirlcevisiblemusic.CircleVisibleMusicView
+        android:id="@+id/cvm_music"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>-->
+
+    <RelativeLayout
+        android:id="@+id/rl_lyrics_container"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp">
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

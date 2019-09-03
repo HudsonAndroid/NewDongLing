@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="play_list_empty_tips">你当前的播放列表是空的哦！</string>
+    <string name="play_source_not_exist">播放资源不存在！</string>
+</resources>

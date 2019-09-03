@@ -1,9 +1,12 @@
-package com.hudson.donglingmusic;
+package com.hudson.donglingmusic.UI.activity;
 
+import android.Manifest;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.os.IBinder;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,23 +15,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+
+import com.hudson.donglingmusic.R;
+import com.hudson.donglingmusic.UI.View.TabView.TabLayout.HomeFirstPage;
+import com.hudson.donglingmusic.Utils.CommonUtils;
+import com.hudson.donglingmusic.service.IPlayerController;
+import com.hudson.donglingmusic.service.MusicService;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private IPlayerController mPlayerController;
+    private ServiceConnectionEntity mConn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        bindService(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,PlayPageActivity.class));
             }
         });
 
@@ -40,6 +51,12 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        CommonUtils.requestPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE,0);
+        CommonUtils.requestPermission(this,Manifest.permission.RECORD_AUDIO,0);
+
+        LinearLayout container = findViewById(R.id.ll_container);
+        new HomeFirstPage(this,container);
     }
 
     @Override
@@ -48,7 +65,7 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            moveTaskToBack(false);
         }
     }
 
@@ -91,11 +108,37 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void bindService(Context context){
+        Intent intent = new Intent(context,MusicService.class);
+        mConn = new ServiceConnectionEntity();
+        context.bindService(intent, mConn,BIND_AUTO_CREATE);
+    }
+
+    private class ServiceConnectionEntity implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mPlayerController = (IPlayerController) service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbindService(mConn);
+        super.onDestroy();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
