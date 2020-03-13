@@ -22,6 +22,7 @@ public class PlayProgressManager implements OnMusicChangedListener {
     private final List<IProgressView> mProgressViews = new ArrayList<>();
     private IPlayerController mPlayerController;
     private static PlayProgressManager sProgressManager;
+    private float mStashedBufferingProgress = 0;
 
     private PlayProgressManager(){
         mPlayerController = MusicController.getController();
@@ -79,6 +80,9 @@ public class PlayProgressManager implements OnMusicChangedListener {
             if(curMusic != null){
                 progressView.setMusicDuration(curMusic.getDuration());
                 progressView.setCurProgress(mPlayerController.getCurTime());
+                if(mStashedBufferingProgress > 0){
+                    progressView.setBufferingPercentage(mStashedBufferingProgress);
+                }
             }
             mProgressViews.add(progressView);
             startTimerTask();
@@ -94,6 +98,7 @@ public class PlayProgressManager implements OnMusicChangedListener {
 
     @Override
     public void onMusicInfoChanged() {
+        mStashedBufferingProgress = 0;
         MusicEntity curMusic = mPlayerController.getCurMusic();
         if(curMusic != null){
             for (IProgressView progressView : mProgressViews) {
@@ -119,6 +124,7 @@ public class PlayProgressManager implements OnMusicChangedListener {
         for (IProgressView progressView : mProgressViews) {
             progressView.setBufferingPercentage(percentage);
         }
+        mStashedBufferingProgress = percentage;
     }
 
     @Override
