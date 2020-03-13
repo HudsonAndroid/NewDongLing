@@ -40,4 +40,8 @@ public class CanIndicateViewPager extends ViewPager {
             addOnPageChangeListener(new AnimateOnPageChangeListener(pagerIndicator,this));
         }
     }
+
+    public void destroy(){
+        clearOnPageChangeListeners();
+    }
 }

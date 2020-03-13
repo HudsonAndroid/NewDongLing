@@ -31,9 +31,7 @@ public class AutoSwitchViewPager extends CanIndicateViewPager {
         mSwitchDuration = DURATION_SWITCH;
     }
 
-    @Override
-    public void setAdapter(PagerAdapter adapter) {
-        super.setAdapter(adapter);
+    private void startAutoSwitch() {
         if(mHandler == null){
             mHandler = new SwitchHandler(this,mSwitchDuration);
         }
@@ -59,16 +57,34 @@ public class AutoSwitchViewPager extends CanIndicateViewPager {
     }
 
     @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        startAutoSwitch();
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mHandler.removeMessages(MSG_SWITCH);
+        stopSwitch();
+    }
+
+    private void stopSwitch(){
+        if(mHandler != null){
+            mHandler.removeMessages(MSG_SWITCH);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        stopSwitch();
     }
 
     private static class SwitchHandler extends Handler{
         private final WeakReference<ViewPager> mViewPagerRef;
         private final long mSwitchDuration;
 
-        SwitchHandler(@NonNull ViewPager autoSwitchViewPager,long switchDuration){
+        SwitchHandler(@NonNull ViewPager autoSwitchViewPager, long switchDuration){
             mViewPagerRef = new WeakReference<>(autoSwitchViewPager);
             mSwitchDuration = switchDuration;
         }

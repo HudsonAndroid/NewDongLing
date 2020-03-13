@@ -14,4 +14,6 @@ public interface IPagerIndicator {
      * @param fraction the scrolling fraction which is range from 0 to 1.
      */
     void onScrollPage(int position, float fraction);
+
+    void setCount(int pageCount);
 }

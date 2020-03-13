@@ -1,7 +1,6 @@
 package com.hudson.donglingmusic.UI.View.ViewPagerWithIndicator.listener;
 
 import android.support.v4.view.ViewPager;
-
 import com.hudson.donglingmusic.UI.View.ViewPagerWithIndicator.indicator.IPagerIndicator;
 
 import java.lang.ref.WeakReference;

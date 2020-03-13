@@ -2,19 +2,20 @@ package com.hudson.donglingmusic.UI.View.ViewPagerWithIndicator.indicator;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.hudson.donglingmusic.R;
 
 /**
  * Indicator which is from small circle to big circle.
  * 默认情况下，内容绘制在控件上方（水平方向上充分利用）
  * Created by Hudson on 2019/1/31.
  */
-public class CirclePointIndicator extends View implements IPagerIndicator {
+public class CirclePointIndicator extends View implements IPagerIndicator{
     private static final float SPACE_RATE = 0.1f;//空隙占据
-    private static final float CIRCLE_RATE = 0.4f;//普通圆相比最大圆的占比
+    private static final float CIRCLE_RATE = 0.55f;//普通圆相比最大圆的占比
     protected float mCircleRate;
     protected int mCount;
     protected float mSpaceDimen;
@@ -37,7 +38,7 @@ public class CirclePointIndicator extends View implements IPagerIndicator {
         super(context, attrs, defStyle);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(Color.RED);
+        mPaint.setColor(context.getResources().getColor(R.color.colorAccent));
         mCircleRate = CIRCLE_RATE;
     }
 
