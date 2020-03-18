@@ -148,7 +148,7 @@ public class LyricsMakeActivity extends BaseNonBindActivity {
                 mLyricsMaker.onPlayInvoke();
             }
         });
-        if(ConfigManager.getInstance().getBoolean(KEY_GUIDE_MAKE_LYRICS,false)){
+        if(!ConfigManager.getInstance().getBoolean(KEY_GUIDE_MAKE_LYRICS,false)){
             mCreateLyrics.post(new Runnable() {
                 @Override
                 public void run() {
