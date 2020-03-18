@@ -65,7 +65,7 @@ public class MakingState implements ILyricsMakeState {
         mPlayerController.seekTo(0);
         mCurPosition = mAdapter.getHeaderOffset() - 1;
         mAdapter.updateCompletePosition(mCurPosition);
-        mRecyclerView.scrollTo(0,0);
+        mRecyclerView.smoothScrollToPosition(0);
         mLyricsMaker.onReset();
     }
 

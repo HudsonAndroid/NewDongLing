@@ -31,6 +31,7 @@ import com.hudson.donglingmusic.UI.activity.PlayPageActivity;
 import com.hudson.donglingmusic.UI.activity.lyricsMake.makePage.LyricsMakeController;
 import com.hudson.donglingmusic.UI.activity.lyricsMake.makePage.ReadyState;
 import com.hudson.donglingmusic.UI.adapter.LyricsMakeAdapter;
+import com.hudson.donglingmusic.UI.recyclerview.TopLinearLayoutManager;
 import com.hudson.donglingmusic.common.Utils.ToastUtils;
 import com.hudson.donglingmusic.common.config.ConfigManager;
 import com.hudson.donglingmusic.service.playState.IState;
@@ -70,7 +71,7 @@ public class LyricsMakeActivity extends BaseNonBindActivity {
         });
         PlayProgressManager.getInstance().addProgressView(mProgressView);
         final RecyclerView recyclerView = (RecyclerView) parent.findViewById(R.id.rv_list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new TopLinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.post(new Runnable() {
