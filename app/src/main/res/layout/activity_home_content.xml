@@ -1,12 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/ll_container"
+    android:fitsSystemWindows="true"
+    android:background="@color/common_light_white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".UI.activity.HomeActivity"
-    tools:showIn="@layout/activity_home_app_bar"/>
+    tools:context=".UI.activity.HomeActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_container"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/v_controller_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical" />
+
+    <View
+        android:id="@+id/v_controller_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:background="@color/float_transparent"
+        android:layout_height="@dimen/height_normal"/>
+
+    <ImageView
+        android:id="@+id/iv_img"
+        app:layout_constraintTop_toTopOf="@id/v_controller_container"
+        app:layout_constraintBottom_toBottomOf="@id/v_controller_container"
+        app:layout_constraintLeft_toLeftOf="@id/v_controller_container"
+        app:layout_constraintDimensionRatio="1:1"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintTop_toTopOf="@id/v_controller_container"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        app:layout_constraintRight_toLeftOf="@+id/iv_play_pause"
+        app:layout_constraintBottom_toTopOf="@+id/tv_desc"
+        android:layout_marginLeft="@dimen/space_little"
+        android:textSize="@dimen/large_more_text_size"
+        android:textColor="@color/common_text_color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintLeft_toLeftOf="@id/tv_title"
+        app:layout_constraintRight_toRightOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintBottom_toBottomOf="@id/v_controller_container"
+        android:textColor="@color/common_light_gray"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_play_list"
+        app:layout_constraintTop_toTopOf="@id/v_controller_container"
+        app:layout_constraintBottom_toBottomOf="@id/v_controller_container"
+        android:src="@drawable/controller_play_list_black"
+        android:layout_marginRight="@dimen/space_normal"
+        app:layout_constraintRight_toRightOf="@id/v_controller_container"
+        android:layout_width="@dimen/height_slight"
+        android:layout_height="@dimen/height_slight"/>
+
+    <ImageView
+        android:id="@+id/iv_play_pause"
+        app:layout_constraintRight_toLeftOf="@id/iv_play_list"
+        app:layout_constraintTop_toTopOf="@id/iv_play_list"
+        app:layout_constraintBottom_toBottomOf="@id/iv_play_list"
+        android:layout_marginRight="@dimen/space_normal"
+        android:src="@drawable/controller_img_play"
+        android:layout_width="@dimen/height_slight"
+        android:layout_height="@dimen/height_slight"/>
+
+    <android.support.constraint.Group
+        android:id="@+id/g_bottom_controller"
+        app:constraint_referenced_ids="v_controller_container,iv_img,tv_title,tv_desc,iv_play_list,iv_play_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -5,58 +5,144 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Group;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hudson.donglingmusic.R;
 import com.hudson.donglingmusic.UI.View.TabView.TabLayout.HomeFirstPage;
-import com.hudson.donglingmusic.Utils.CommonUtils;
+import com.hudson.donglingmusic.common.Utils.CommonUtils;
+import com.hudson.donglingmusic.common.Utils.ToastUtils;
+import com.hudson.donglingmusic.common.Utils.bitmapUtils.BitmapUtils;
+import com.hudson.donglingmusic.common.config.ConfigManager;
+import com.hudson.donglingmusic.controller.ModuleManager;
+import com.hudson.donglingmusic.entity.MusicEntity;
+import com.hudson.donglingmusic.module.skin.manager.OnSkinLoadCompleteListener;
+import com.hudson.donglingmusic.module.skin.manager.SkinManager;
+import com.hudson.donglingmusic.persistent.db.DbModuleImpl;
 import com.hudson.donglingmusic.service.IPlayerController;
 import com.hudson.donglingmusic.service.MusicService;
+import com.hudson.donglingmusic.service.listener.OnMusicChangedListener;
+import com.hudson.donglingmusic.service.musicController.MusicController;
+import com.jaeger.library.StatusBarUtil;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    private IPlayerController mPlayerController;
+public class HomeActivity extends BasePlayActivity
+        implements OnMusicChangedListener, OnSkinLoadCompleteListener, View.OnClickListener {
     private ServiceConnectionEntity mConn;
+    private TextView mTitle,mDesc;
+    private ImageView mImg;
+    private HomeFirstPage mHomeFirstPage;
+    private Group mBottomGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //调整为状态栏为亮色模式
+            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }else{
+            //低版本的话，把状态栏设置为黑色，避免状态栏看不清楚
+            StatusBarUtil.setColor(this, Color.BLACK);
+        }
         bindService(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setOnClickListener(new View.OnClickListener() {
+        SkinManager.getInstance().addSkinLoadCompleteListener(this);
+    }
+
+    @Override
+    protected void initView(ConstraintLayout parent) {
+        LayoutInflater.from(this).inflate(R.layout.activity_home, parent);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        CommonUtils.requestPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, 1);
+        LinearLayout container = findViewById(R.id.ll_container);
+        mHomeFirstPage = new HomeFirstPage(this, container);
+
+        View menu = container.findViewById(R.id.iv_menu);
+        menu.setVisibility(View.VISIBLE);
+        menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,PlayPageActivity.class));
+                if(drawer.isDrawerOpen(GravityCompat.START)){
+                    drawer.closeDrawer(GravityCompat.START);
+                }else{
+                    drawer.openDrawer(GravityCompat.START);
+                }
             }
         });
+        mTitle = (TextView) findViewById(R.id.tv_title);
+        mDesc = (TextView) findViewById(R.id.tv_desc);
+        mImg = (ImageView) findViewById(R.id.iv_img);
+        findViewById(R.id.iv_play_list).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mPlayerController.getPlayList().size() > 0){
+                    PlayQueueActivity.start(HomeActivity.this);
+                }else{
+                    ToastUtils.showToast(R.string.common_play_list_empty);
+                }
+            }
+        });
+        findViewById(R.id.v_controller_container).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayPageActivity.start(HomeActivity.this);
+            }
+        });
+        mBottomGroup = findViewById(R.id.g_bottom_controller);
+        attachMenu(((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0));
+    }
 
+    private void attachMenu(View parent){
+        parent.findViewById(R.id.tv_skin).setOnClickListener(this);
+        parent.findViewById(R.id.tv_display_setting).setOnClickListener(this);
+        parent.findViewById(R.id.tv_lyrics_setting).setOnClickListener(this);
+        parent.findViewById(R.id.tv_exit_setting).setOnClickListener(this);
+    }
+
+    public void onClick(View v){
+        int id = v.getId();
+        if(id == R.id.tv_skin){
+            SkinManager.getInstance().loadSkin(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+"donglingMusic/"+"buleskin.skin");
+        }else if(id == R.id.tv_display_setting){
+
+        }else if(id == R.id.tv_lyrics_setting){
+            ConfigManager instance = ConfigManager.getInstance();
+            int style = instance.getInt("LyricsStyle", 0);
+            if(style == 0){
+                instance.putInt("LyricsStyle",1);
+            }else{
+                instance.putInt("LyricsStyle",0);
+            }
+        }else if(id == R.id.tv_exit_setting){
+            exit();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        drawer.closeDrawer(GravityCompat.START);
+    }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        CommonUtils.requestPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE,0);
-        CommonUtils.requestPermission(this,Manifest.permission.RECORD_AUDIO,0);
-
-        LinearLayout container = findViewById(R.id.ll_container);
-        new HomeFirstPage(this,container);
+    private void bindService(Context context){
+        Intent intent = new Intent(context, MusicService.class);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //android8.0以上通过startForegroundService启动service
+            startForegroundService(intent);
+        }else{
+            startService(intent);
+        }
+        mConn = new ServiceConnectionEntity();
+        context.bindService(intent, mConn,BIND_AUTO_CREATE);
     }
 
     @Override
@@ -70,75 +156,85 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void refreshMusicInfo() {
+        MusicEntity curMusic = mPlayerController.getCurMusic();
+        if(curMusic != null){
+            if(mBottomGroup.getVisibility() == View.GONE){
+                mBottomGroup.setVisibility(View.VISIBLE);
+            }
+            mTitle.setText(curMusic.getTitle());
+            mDesc.setText(curMusic.getAlbumTitle());
+//            MusicPicUtils.loadMusicPic(curMusic,mImg);
+            BitmapUtils.loadMusicPic(curMusic,mImg);
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-            finish();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    private void bindService(Context context){
-        Intent intent = new Intent(context,MusicService.class);
-        mConn = new ServiceConnectionEntity();
-        context.bindService(intent, mConn,BIND_AUTO_CREATE);
     }
 
     private class ServiceConnectionEntity implements ServiceConnection {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e("hudson2","服务绑定成功");
             mPlayerController = (IPlayerController) service;
+            mPlayerController.addMusicChangedListener(HomeActivity.this);
+            MusicController.init(mPlayerController);
+            init();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
+            if(mPlayerController != null){
+                mPlayerController.removeMusicChangedListener(HomeActivity.this);
+            }
         }
+    }
+
+    private void init(){
+        if(mPlayerController.getCurMusic() != null){
+            mBottomGroup.setVisibility(View.VISIBLE);
+        }else{
+            mBottomGroup.setVisibility(View.GONE);
+        }
+        togglePlayPauseImage();
+        onMusicInfoChanged();
+    }
+
+    @Nullable
+    @Override
+    protected ImageView getPlayPauseImageView() {
+        return (ImageView) findViewById(R.id.iv_play_pause);
+    }
+
+    private void exit(){
+        ((DbModuleImpl)ModuleManager.getDbModule()).close();
+        mPlayerController.stop();
+        finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     @Override
     protected void onDestroy() {
+        mHomeFirstPage.onDestroy();
         unbindService(mConn);
+        mConn = null;
         super.onDestroy();
-        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    protected int getPlayResId(){
+        return R.drawable.icon_notification_play;
+    }
+
+    protected int getPauseResId(){
+        return R.drawable.icon_notification_pause;
+    }
+
+    @Override
+    public void onSkinLoadComplete() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //调整为状态栏为亮色模式
+            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_VISIBLE);
+        }else{
+            //低版本的话，把状态栏设置为黑色，避免状态栏看不清楚
+            StatusBarUtil.setColor(this, Color.WHITE);
+        }
     }
 }
