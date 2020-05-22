@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference;
  * Created by Hudson on 2019/5/24.
  */
 public class AutoSwitchViewPager extends CanIndicateViewPager {
-    private static final long DURATION_SWITCH = 3000;//switch page duration
+    private static final int DURATION_SWITCH = 3000;//switch page duration
     private static final int MSG_SWITCH = 0x99;
     private long mSwitchDuration;
     private SwitchHandler mHandler;
@@ -40,7 +40,7 @@ public class AutoSwitchViewPager extends CanIndicateViewPager {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
@@ -50,10 +50,8 @@ public class AutoSwitchViewPager extends CanIndicateViewPager {
             case MotionEvent.ACTION_CANCEL:
                 mHandler.sendEmptyMessageDelayed(MSG_SWITCH,mSwitchDuration);
                 break;
-            default:
-                break;
         }
-        return super.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
