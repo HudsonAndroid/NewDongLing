@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 /**
- * Created by hpz on 2018/11/5.
+ * Created by Hudson on 2018/11/5.
  */
 public interface ITab {
     /**
@@ -17,4 +17,11 @@ public interface ITab {
      * 刷新,可能是加载网络数据
      */
     void loadAndRefreshView();
+
+
+    void onDestroy();
+
+    void onCheck();
+
+    void onUncheck();
 }

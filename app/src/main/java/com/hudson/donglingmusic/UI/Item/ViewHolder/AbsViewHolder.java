@@ -7,7 +7,7 @@ import com.hudson.donglingmusic.UI.Item.OnItemClickListener;
 
 /**
  * 抽象的ViewHolder
- * Created by hpz on 2018/5/11.
+ * Created by Hudson on 2018/5/11.
  */
 
 public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
@@ -22,7 +22,7 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClick(mData,getAdapterPosition());
+                listener.onItemClick(mData,getAdapterPosition());
             }
         });
     }

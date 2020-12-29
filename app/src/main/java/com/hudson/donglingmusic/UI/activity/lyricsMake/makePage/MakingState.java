@@ -22,8 +22,8 @@ import com.hudson.donglingmusic.common.Utils.asyncUtils.IDoOnSuccess;
 import com.hudson.donglingmusic.customClass.ConfirmDialog;
 import com.hudson.donglingmusic.customClass.LoadingDialog;
 import com.hudson.donglingmusic.entity.MusicEntity;
+import com.hudson.donglingmusic.global.DongLingApplication;
 import com.hudson.donglingmusic.service.IPlayerController;
-import com.hudson.donglingmusic.service.musicController.MusicController;
 
 /**
  * Created by Hudson on 2020/3/13.
@@ -48,7 +48,7 @@ public class MakingState implements ILyricsMakeState {
                 mCurPosition += mAdapter.getHeaderOffset();
             }
         });
-        mPlayerController = MusicController.getController();
+        mPlayerController = DongLingApplication.getPlayerController();
         mLyricsMaker = new LyricsMaker();
     }
 
@@ -95,7 +95,7 @@ public class MakingState implements ILyricsMakeState {
         int progress = mPlayerController.getCurTime() + ADJUST_PROGRESS;
         MusicEntity curMusic = mPlayerController.getCurMusic();
         if(curMusic!= null){
-            mPlayerController.seekTo((int) Math.min(progress,curMusic.getDuration()));
+            mPlayerController.seekTo((int) Math.min(progress,curMusic.getSongDuration()));
         }
     }
 
@@ -169,7 +169,7 @@ public class MakingState implements ILyricsMakeState {
         if(curMusic != null){
             final LoadingDialog loading = new LoadingDialog(mRecyclerView.getContext());
             loading.show();
-            new AsyncTask<Boolean>().doInBackground(new IDoInBackground<Boolean>() {
+            new AsyncTask<Boolean>().useDbThreadPool().doInBackground(new IDoInBackground<Boolean>() {
                 @Override
                 public Boolean run() throws AsyncException {
                     return mLyricsMaker.save(LocalMusicUtils.getMusicLocalLyricsFilePath(curMusic));

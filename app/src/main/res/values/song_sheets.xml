@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sheet_favorite">我喜欢</string>
+    <string name="sheet_my_music">我的音乐</string>
+</resources>

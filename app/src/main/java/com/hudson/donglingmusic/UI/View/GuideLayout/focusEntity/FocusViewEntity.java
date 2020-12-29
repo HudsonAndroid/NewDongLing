@@ -8,7 +8,7 @@ import com.hudson.donglingmusic.UI.View.GuideLayout.shape.ViewShape;
 /**
  * 按照view的原始轮廓显示高亢区域
  * 这里的轮廓是指去除了透明部分的轮廓
- * Created by hpz on 2019/3/4.
+ * Created by Hudson on 2019/3/4.
  */
 public class FocusViewEntity extends FocusEntity {
     private final ViewShape mShape;

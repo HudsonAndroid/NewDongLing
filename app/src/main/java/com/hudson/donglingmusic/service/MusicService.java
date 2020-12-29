@@ -1,43 +1,44 @@
 package com.hudson.donglingmusic.service;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
 
-import com.hudson.donglingmusic.R;
-import com.hudson.donglingmusic.Utils.CommonUtils;
-import com.hudson.donglingmusic.Utils.ToastUtils;
-import com.hudson.donglingmusic.service.exception.PlayListEmptyException;
-import com.hudson.donglingmusic.service.playState.PlayStateHelper;
-import com.hudson.donglingplayer.AbsMediaPlayer;
-import com.hudson.donglingplayer.VLCPlayer.VlcPlayer;
-import com.hudson.donglingplayer.listener.PlayerStateListener;
-import com.hudson.musicentitylib.MusicEntity;
+import com.hudson.donglingmusic.entity.MusicEntity;
+import com.hudson.donglingmusic.service.listener.OnMusicChangedListener;
+import com.hudson.donglingmusic.service.notify.NotifyHelper;
+import com.hudson.donglingmusic.service.playState.IState;
+import com.hudson.donglingmusic.service.playerWrapper.MusicPlayer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Hudson on 2019/1/20.
  */
-public class MusicService extends Service implements  PlayerStateListener {
-    private AbsMediaPlayer mPlayer;
-    private final List<MusicEntity> mPlayList;
-    private PlayStateHelper mStateHelper;
-    private int mCurIndex = 0;
+public class MusicService extends Service {
+    private MusicPlayer mPlayer;
+    private NotifyHelper mNotifyHelper;
 
-    public MusicService(){
-        Context context = CommonUtils.getContext();
-        Log.e("hudson","对象为空?"+context);
-        mPlayer = new VlcPlayer(context);
-        mPlayer.setStateChangeListener(this);
-        mPlayList = new ArrayList<>();
-        mStateHelper = new PlayStateHelper();
+    public MusicService() {
+        mPlayer = new MusicPlayer();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mNotifyHelper = new NotifyHelper(this);
+        mNotifyHelper.startForeground();
+        mPlayer.addMusicChangedListener(mNotifyHelper);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mNotifyHelper.onDestroy();
+        mPlayer.removeMusicChangedListener(mNotifyHelper);
     }
 
     @Nullable
@@ -46,131 +47,45 @@ public class MusicService extends Service implements  PlayerStateListener {
         return new ExposeMethodEntity();
     }
 
-    public void setPlayList(List<MusicEntity> playList){
-        mPlayList.clear();
-        mPlayList.addAll(playList);
-        mStateHelper.setSize(mPlayList.size());
-        mCurIndex = 0;
-    }
-
-    public void next(){
-        try {
-            int nextIndex = mStateHelper.getNextIndex(mCurIndex);
-            play(nextIndex);
-        }catch (PlayListEmptyException e){
-            e.printStackTrace();
-            ToastUtils.showToast(e.getMessage());
-            stop();
-        }catch (RuntimeException e){
-            e.printStackTrace();
-            stop();
-        }
-    }
-
-    public void pre(){
-        try {
-            int preIndex = mStateHelper.getPreIndex(mCurIndex);
-            play(preIndex);
-        }catch (PlayListEmptyException e){
-            e.printStackTrace();
-            ToastUtils.showToast(e.getMessage());
-            stop();
-        }catch (RuntimeException e){
-            e.printStackTrace();
-            stop();
-        }
-    }
-
-    public void play(){
-        mPlayer.play();
-    }
-
-    public void pause(){
-        mPlayer.pause();
-    }
-
-    public void stop(){
-        mPlayer.stop();
-    }
-
-    public void play(int index){
-        int size = mPlayList.size();
-        if(size != 0 && index >= 0&& index < size){
-            MusicEntity music = mPlayList.get(index);
-            mPlayer.reset();
-            String path = music.getPath();
-            if(!TextUtils.isEmpty(path)){
-                mPlayer.init(path);
-                mCurIndex = index;
-            }else{
-                ToastUtils.showToast(R.string.play_source_not_exist);
-            }
-        }
-    }
-
     @Override
-    public void mediaOpening() {
-
-    }
-
-    @Override
-    public void mediaStartReady() {
-        mPlayer.play();
-    }
-
-    @Override
-    public void mediaBuffering(float percent) {
-
-    }
-
-    @Override
-    public void onProgressPercentChange(float percent) {
-
-    }
-
-    @Override
-    public void onProgressTimeChange(long time) {
-
-    }
-
-    @Override
-    public void onEnd() {
-        next();
-    }
-
-    @Override
-    public void onError(String msg) {
-
+    public boolean onUnbind(Intent intent) {
+        return super.onUnbind(intent);
     }
 
     private class ExposeMethodEntity extends Binder implements IPlayerController{
 
-        public void setPlayList(List<MusicEntity> playList){
-            MusicService.this.setPlayList(playList);
+        public void setPlayList(@NonNull List<MusicEntity> playList,@NonNull String uniqueTag){
+            mPlayer.setPlayList(playList,uniqueTag);
+        }
+
+        @NonNull
+        @Override
+        public List<MusicEntity> getPlayList() {
+            return mPlayer.getPlayList();
         }
 
         public void play(){
-            MusicService.this.play();
+            mPlayer.play();
         }
 
         public void play(int index){
-            MusicService.this.play(index);
+            mPlayer.play(index);
         }
 
         public void pause(){
-            MusicService.this.pause();
+            mPlayer.pause();
         }
 
         public void stop(){
-            MusicService.this.stop();
+            mPlayer.stop();
         }
 
         public void next(){
-            MusicService.this.next();
+            mPlayer.next();
         }
 
         public void pre(){
-            MusicService.this.pre();
+            mPlayer.pre();
         }
 
         @Override
@@ -189,17 +104,46 @@ public class MusicService extends Service implements  PlayerStateListener {
         }
 
         @Override
-        @Nullable
-        public MusicEntity getCurMusic() {
-            if(mPlayList.size() != 0){
-                return mPlayList.get(mCurIndex);
-            }
-            return null;
+        public boolean isPause(){
+            return mPlayer.isPause();
         }
 
         @Override
-        public int getCurProgress() {
+        @Nullable
+        public MusicEntity getCurMusic() {
+            return mPlayer.getCurMusic();
+        }
+
+        @Override
+        public int getCurTime() {
             return (int)mPlayer.getTime();
         }
+
+        @Override
+        public void addMusicChangedListener(@NonNull OnMusicChangedListener listener){
+            mPlayer.addMusicChangedListener(listener);
+        }
+
+        @Override
+        public void removeMusicChangedListener(@NonNull OnMusicChangedListener listener){
+            mPlayer.removeMusicChangedListener(listener);
+        }
+
+        @Override
+        public void setPlayState(IState playState){
+            mPlayer.setPlayState(playState);
+        }
+
+        @Override
+        public int switchPlayState(){
+            return mPlayer.switchPlayState();
+        }
+
+        @Override
+        public IState getPlayState(){
+            return mPlayer.getPlayState();
+        }
     }
+
+
 }

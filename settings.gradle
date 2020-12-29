@@ -1,5 +1,6 @@
-include ':app', ':musicentitylib',':donglingplayer',':circlevisiblemusicview',':LyricsView'
+include ':app',':donglingplayer',':circlevisiblemusicview',':LyricsView'
 
-project(':donglingplayer').projectDir = file("F:\\projects\\DongLingPlayer\\donglingplayer")
-project(':circlevisiblemusicview').projectDir = file("F:\\projects\\NewCirlceVisibleMusicView\\circlevisiblemusicview")
-project(':LyricsView').projectDir = file("F:\\projects\\NewLyricsView\\LyricsView")
+project(':donglingplayer')
+project(':circlevisiblemusicview')
+project(':LyricsView')
+// 引用本地的其他工程 project(':LyricsView').projectDir = file("F:\\projects\\NewLyricsView\\LyricsView")

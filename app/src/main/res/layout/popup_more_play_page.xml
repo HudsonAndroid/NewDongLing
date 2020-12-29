@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/popup_width"
+    android:background="@drawable/shape_round_bg"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_make_lyrics"
+        app:layout_constraintLeft_toRightOf="@+id/iv_make_lyrics"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/lyrics_make"
+        android:textSize="@dimen/large_text_size"
+        android:textColor="@color/common_text_color"
+        android:paddingTop="@dimen/space_normal"
+        android:paddingBottom="@dimen/space_normal"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:gravity="center_vertical"
+        android:layout_width="@dimen/popup_width"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_make_lyrics"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_make_lyrics"
+        app:layout_constraintBottom_toBottomOf="@id/tv_make_lyrics"
+        android:src="@drawable/icon_edit"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_width="@dimen/space_large"
+        android:layout_height="@dimen/space_large"/>
+
+    <TextView
+        android:id="@+id/tv_forward_lyrics"
+        app:layout_constraintLeft_toRightOf="@+id/iv_make_lyrics"
+        app:layout_constraintTop_toBottomOf="@id/tv_make_lyrics"
+        android:text="@string/lyrics_speed_up"
+        android:textSize="@dimen/large_text_size"
+        android:textColor="@color/common_text_color"
+        android:paddingTop="@dimen/space_normal"
+        android:paddingBottom="@dimen/space_normal"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:gravity="center_vertical"
+        android:layout_width="@dimen/popup_width"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_forward_lyrics"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_forward_lyrics"
+        app:layout_constraintBottom_toBottomOf="@id/tv_forward_lyrics"
+        android:src="@drawable/icon_lyrics_forward"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_width="@dimen/space_large"
+        android:layout_height="@dimen/space_large"/>
+
+
+    <TextView
+        android:id="@+id/tv_backward_lyrics"
+        app:layout_constraintLeft_toRightOf="@+id/iv_make_lyrics"
+        app:layout_constraintTop_toBottomOf="@id/tv_forward_lyrics"
+        android:text="@string/lyrics_low_down"
+        android:textSize="@dimen/large_text_size"
+        android:textColor="@color/common_text_color"
+        android:paddingTop="@dimen/space_normal"
+        android:paddingBottom="@dimen/space_normal"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:gravity="center_vertical"
+        android:layout_width="@dimen/popup_width"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_backward_lyrics"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_backward_lyrics"
+        app:layout_constraintBottom_toBottomOf="@id/tv_backward_lyrics"
+        android:src="@drawable/icon_lyrics_backward"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_width="@dimen/space_large"
+        android:layout_height="@dimen/space_large"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -7,15 +7,15 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.hudson.donglingmusic.common.Utils.BitmapUtils;
 import com.hudson.donglingmusic.common.Utils.asyncUtils.AsyncTask;
 import com.hudson.donglingmusic.common.Utils.asyncUtils.IDoInBackground;
 import com.hudson.donglingmusic.common.Utils.asyncUtils.IDoOnFail;
 import com.hudson.donglingmusic.common.Utils.asyncUtils.IDoOnSuccess;
+import com.hudson.donglingmusic.common.Utils.bitmapUtils.BitmapUtils;
 
 /**
  * 按照View自身的轮廓高亢显示view，可以显示不规则图形效果
- * Created by hpz on 2019/3/4.
+ * Created by Hudson on 2019/3/4.
  */
 public class ViewShape implements IShape{
     private Bitmap mViewBitmap;
@@ -27,7 +27,7 @@ public class ViewShape implements IShape{
     }
 
     public void prepare() {
-        AsyncTask.newTask(Bitmap.class).doInBackground(new IDoInBackground<Bitmap>() {
+        AsyncTask.newTask(Bitmap.class).useDbThreadPool().doInBackground(new IDoInBackground<Bitmap>() {
             @Override
             public Bitmap run() {
                 //对产生的图片进行处理。这一步不能忽视，原因是通过view直接产生的图片

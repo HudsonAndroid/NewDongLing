@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
 
 import com.hudson.donglingmusic.R;
@@ -26,8 +26,8 @@ import com.hudson.donglingmusic.common.Utils.asyncUtils.IDoInBackground;
 import com.hudson.donglingmusic.common.Utils.asyncUtils.IDoOnSuccess;
 import com.hudson.donglingmusic.entity.LyricsResult;
 import com.hudson.donglingmusic.entity.MusicEntity;
+import com.hudson.donglingmusic.global.DongLingApplication;
 import com.hudson.donglingmusic.service.IPlayerController;
-import com.hudson.donglingmusic.service.musicController.MusicController;
 import com.hudson.newlyricsview.lyrics.entity.Lyrics;
 import com.jaeger.library.StatusBarUtil;
 
@@ -47,7 +47,6 @@ public class LyricsInputActivity extends BaseActivity implements LyricsInputPopu
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //调整为状态栏为亮色模式
@@ -82,6 +81,8 @@ public class LyricsInputActivity extends BaseActivity implements LyricsInputPopu
                     data.putExtra(KEY_LYRICS,input);
                     setResult(RESULT_OK, data);
                     finish();
+                    IPlayerController controller = DongLingApplication.getPlayerController();
+                    Log.e("hudson2","控制器已经是"+(controller == null));
                 }else{
                     ToastUtils.showToast(R.string.common_lyrics_empty);
                 }
@@ -93,7 +94,7 @@ public class LyricsInputActivity extends BaseActivity implements LyricsInputPopu
                 importLyrics();
             }
         });
-        mPlayerController = MusicController.getController();
+        mPlayerController = DongLingApplication.getPlayerController();
         TextView title = (TextView) parent.findViewById(R.id.tv_title);
         TextView artist = (TextView) parent.findViewById(R.id.tv_artist);
         if(mPlayerController != null){

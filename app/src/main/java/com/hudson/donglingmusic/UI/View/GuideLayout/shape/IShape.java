@@ -5,7 +5,7 @@ import android.graphics.Paint;
 
 /**
  * 图形Shape
- * Created by hpz on 2019/2/25.
+ * Created by Hudson on 2019/2/25.
  */
 public interface IShape {
     /**

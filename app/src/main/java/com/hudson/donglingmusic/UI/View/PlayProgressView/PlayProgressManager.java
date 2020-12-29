@@ -3,9 +3,9 @@ package com.hudson.donglingmusic.UI.View.PlayProgressView;
 import android.support.annotation.NonNull;
 
 import com.hudson.donglingmusic.entity.MusicEntity;
+import com.hudson.donglingmusic.global.DongLingApplication;
 import com.hudson.donglingmusic.service.IPlayerController;
 import com.hudson.donglingmusic.service.listener.OnMusicChangedListener;
-import com.hudson.donglingmusic.service.musicController.MusicController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class PlayProgressManager implements OnMusicChangedListener {
     private float mStashedBufferingProgress = 0;
 
     private PlayProgressManager(){
-        mPlayerController = MusicController.getController();
+        mPlayerController = DongLingApplication.getPlayerController();
     }
 
     public static PlayProgressManager getInstance(){
@@ -78,7 +78,7 @@ public class PlayProgressManager implements OnMusicChangedListener {
         if(!mProgressViews.contains(progressView)){
             MusicEntity curMusic = mPlayerController.getCurMusic();
             if(curMusic != null){
-                progressView.setMusicDuration(curMusic.getDuration());
+                progressView.setMusicDuration(curMusic.getSongDuration());
                 progressView.setCurProgress(mPlayerController.getCurTime());
                 if(mStashedBufferingProgress > 0){
                     progressView.setBufferingPercentage(mStashedBufferingProgress);
@@ -102,7 +102,7 @@ public class PlayProgressManager implements OnMusicChangedListener {
         MusicEntity curMusic = mPlayerController.getCurMusic();
         if(curMusic != null){
             for (IProgressView progressView : mProgressViews) {
-                progressView.setMusicDuration(curMusic.getDuration());
+                progressView.setMusicDuration(curMusic.getSongDuration());
             }
         }
     }

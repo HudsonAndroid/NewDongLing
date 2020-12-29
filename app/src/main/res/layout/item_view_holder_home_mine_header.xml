@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:textSize="@dimen/large_text_size"
+        android:text="@string/sheet_my_music"
+        android:textColor="@color/common_text_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/space_big"
+        android:layout_marginTop="@dimen/space_big"
+        android:layout_marginBottom="@dimen/space_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+<!--    我喜欢 -->
+    <com.android.library.YLCircleImageView
+        android:id="@+id/iv_favorite"
+        android:src="@drawable/default_bg"
+        android:layout_marginTop="@dimen/space_normal"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/iv_recently"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintDimensionRatio="1:1.5"
+        app:radius="@dimen/space_normal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+<!--    最近播放 -->
+    <com.android.library.YLCircleImageView
+        android:id="@+id/iv_recently"
+        app:layout_constraintTop_toTopOf="@id/iv_favorite"
+        app:layout_constraintBottom_toBottomOf="@id/iv_favorite"
+        app:layout_constraintLeft_toRightOf="@id/iv_favorite"
+        app:layout_constraintRight_toLeftOf="@+id/iv_recently_sheet"
+        app:layout_constraintWidth_percent="0.3"
+        app:radius="@dimen/space_normal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+<!--    最近播放的歌单 -->
+    <com.android.library.YLCircleImageView
+        android:id="@+id/iv_recently_sheet"
+        app:layout_constraintTop_toTopOf="@id/iv_favorite"
+        app:layout_constraintBottom_toBottomOf="@id/iv_favorite"
+        app:layout_constraintLeft_toRightOf="@id/iv_recently"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.3"
+        app:radius="@dimen/space_normal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+</android.support.constraint.ConstraintLayout>

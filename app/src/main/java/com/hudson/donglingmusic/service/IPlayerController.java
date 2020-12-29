@@ -1,8 +1,11 @@
 package com.hudson.donglingmusic.service;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.hudson.musicentitylib.MusicEntity;
+import com.hudson.donglingmusic.entity.MusicEntity;
+import com.hudson.donglingmusic.service.listener.OnMusicChangedListener;
+import com.hudson.donglingmusic.service.playState.IState;
 
 import java.util.List;
 
@@ -10,7 +13,10 @@ import java.util.List;
  * Created by Hudson on 2019/1/20.
  */
 public interface IPlayerController {
-    void setPlayList(List<MusicEntity> playList);
+    void setPlayList(@NonNull List<MusicEntity> playList,@NonNull String uniqueTag);
+
+    @NonNull
+    List<MusicEntity> getPlayList();
 
     void play();
 
@@ -30,8 +36,20 @@ public interface IPlayerController {
 
     boolean isPlaying();
 
+    boolean isPause();
+
     @Nullable
     MusicEntity getCurMusic();
 
-    int getCurProgress();
+    int getCurTime();
+
+    int switchPlayState();
+
+    void setPlayState(IState playState);
+
+    IState getPlayState();
+
+    void addMusicChangedListener(@NonNull OnMusicChangedListener listener);
+
+    void removeMusicChangedListener(@NonNull OnMusicChangedListener listener);
 }

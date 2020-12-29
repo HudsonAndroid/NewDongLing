@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name_song_sheet">歌单</string>
+    <string name="name_edit_lyrics">编辑歌词</string>
+    <string name="song_sheet_play_all">播放全部(共%1$d首)</string>
+    <string name="queue_play_current">当前播放(%1$d)</string>
+    <string name="play_mode_loop_list">列表循环</string>
+    <string name="play_mode_loop_one">单曲循环</string>
+    <string name="play_mode_shuffle">随机播放</string>
+    <string name="lyrics_empty_tips">没有找到歌词，你可以@制作歌词@</string>
+    <string name="lyrics_make_go_to_create">还没有歌词文本哦，@去创建@</string>
+    <string name="lyrics_make">制作歌词</string>
+    <string name="lyrics_speed_up">快进歌词500毫秒</string>
+    <string name="lyrics_low_down">快退歌词500毫秒</string>
+    <string name="lyrics_make_import_lyrics">现有导入</string>
+    <string name="lyrics_make_non_lyrics_tips">当前没有歌词，请先创建歌词</string>
+    <string name="lyrics_make_ready_start">请先点击播放以开始制作</string>
+    <string name="lyrics_input_more_filter">过滤空行</string>
+    <string name="lyrics_make_save_not_end">检测到当前歌词尚未制作完成，是否直接保存？</string>
+    <string name="lyrics_input_tips">小提示：\n每行文本将作为每一句演唱的歌词；\n如果对已播放过的歌词进行修改（非新增行），会把之前内容覆盖；\n如果对已播放过的歌词新增行，后续歌词会被相应后移。</string>
+    <string name="notify_no_music_playing">当前没有音乐正在播放</string>
+    <string name="add_favorite_success">已添加到我喜欢的歌单中</string>
+    <string name="remove_favorite_success">已从我喜欢歌单中移除</string>
+    <string name="menu_setting_skin">皮肤设置</string>
+    <string name="menu_setting_display">标签设置</string>
+    <string name="menu_setting_lyrics">歌词设置</string>
+    <string name="menu_setting_exit">退出</string>
+    <string name="home_mine_created_sheets">创建的歌单</string>
+    <string name="home_mine_create_sheet">创建歌单</string>
+</resources>

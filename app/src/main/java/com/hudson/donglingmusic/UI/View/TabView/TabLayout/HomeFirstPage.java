@@ -5,8 +5,10 @@ import android.view.ViewGroup;
 
 import com.hudson.donglingmusic.UI.Item.Tab.HomeFirstTab.HomeDefaultTab;
 import com.hudson.donglingmusic.UI.Item.Tab.HomeFirstTab.HomeLocalMusicTab;
+import com.hudson.donglingmusic.UI.Item.Tab.HomeFirstTab.HomeMineTab;
+import com.hudson.donglingmusic.UI.Item.Tab.HomeFirstTab.SongSheetTab;
 import com.hudson.donglingmusic.UI.View.TabView.TabLayout.inner.AbsTabPagerWrapperView;
-import com.hudson.donglingmusic.UI.View.TabView.TabLayout.inner.BasePagerTabItem;
+import com.hudson.donglingmusic.UI.View.TabView.TabLayout.inner.tab.BasePagerTabItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +24,10 @@ public class HomeFirstPage extends AbsTabPagerWrapperView {
     @Override
     protected List<BasePagerTabItem> getTabList() {
         List<BasePagerTabItem> contents = new ArrayList<>();
+        contents.add(new HomeMineTab());
         contents.add(new HomeDefaultTab());
         contents.add(new HomeLocalMusicTab());
+        contents.add(new SongSheetTab());
         return contents;
     }
 }

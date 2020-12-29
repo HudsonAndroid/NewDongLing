@@ -2,8 +2,8 @@ package com.hudson.donglingmusic.UI.activity.lyricsMake.makePage;
 
 import com.hudson.donglingmusic.R;
 import com.hudson.donglingmusic.common.Utils.ToastUtils;
+import com.hudson.donglingmusic.global.DongLingApplication;
 import com.hudson.donglingmusic.service.IPlayerController;
-import com.hudson.donglingmusic.service.musicController.MusicController;
 
 /**
  * Created by Hudson on 2020/3/13.
@@ -26,7 +26,7 @@ public class ReadyState implements ILyricsMakeState {
 
     @Override
     public void onPlayInvoke() {
-        IPlayerController controller = MusicController.getController();
+        IPlayerController controller = DongLingApplication.getPlayerController();
         controller.seekTo(0);
         controller.play();
         mController.setState(new MakingState(mController));

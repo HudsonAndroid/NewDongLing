@@ -1,11 +1,11 @@
 package com.hudson.donglingmusic.UI.Item.Tab.HomeFirstTab;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.TextView;
 
 import com.hudson.donglingmusic.R;
-import com.hudson.donglingmusic.UI.View.TabView.TabLayout.inner.BasePagerTabItem;
+import com.hudson.donglingmusic.UI.Item.TabContentView.home.HomeHotPage;
+import com.hudson.donglingmusic.UI.View.TabView.TabLayout.inner.tab.BasePagerTabItem;
+import com.hudson.donglingmusic.UI.View.TabView.TabLayout.inner.tabContent.AbsTabContent;
 
 /**
  * Created by Hudson on 2019/1/5.
@@ -17,9 +17,9 @@ public class HomeDefaultTab extends BasePagerTabItem {
     }
 
     @Override
-    protected View createContentView(Context context) {
-        TextView textView = new TextView(context);
-        textView.setText(R.string.home_hot);
-        return textView;
+    protected AbsTabContent createContentView(final Context context) {
+        return new HomeHotPage(context);
     }
+
+
 }

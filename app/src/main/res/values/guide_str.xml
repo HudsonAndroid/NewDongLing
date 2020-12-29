@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guide_lyrics_make_tips_step_one">首先，点击“去创建”来创建歌词文本</string>
+    <string name="guide_lyrics_make_tips_step_two">创建好歌词文本后，点击播放即可开始制作歌词</string>
+    <string name="guide_lyrics_make_tips_step_three">点击上箭头或下箭头，可以切换到上一句歌词或下一句歌词</string>
+    <string name="guide_lyrics_make_tips_step_four">左箭头和右箭头您可以控制歌曲短暂快退或快进</string>
+    <string name="guide_lyrics_make_tips_step_five">点击这个图标可以重新开始哦</string>
+    <string name="guide_lyrics_make_tips_step_six">别忘了点击完成保存您制作的歌词哦</string>
+    <string name="guide_step_next">下一步</string>
+    <string name="guide_step_complete">我知道了</string>
+    <string name="guide_step_skip">跳过引导</string>
+</resources>

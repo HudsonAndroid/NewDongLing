@@ -20,6 +20,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.hudson.donglingmusic.R;
+import com.hudson.donglingmusic.common.Utils.CommonUtils;
 import com.hudson.donglingmusic.common.Utils.StorageUtils;
 import com.hudson.donglingmusic.entity.MusicEntity;
 import com.hudson.donglingmusic.global.DongLingApplication;
@@ -38,17 +39,19 @@ public class BitmapUtils {
 
     public static void loadNetBitmap(final View view, String url, int radius,boolean dark){
         Context context = view.getContext();
-        Glide.with(context)
-                .load(url)
-                .bitmapTransform(new BlurTransformation(context,radius),
-                        new DarkBitmap(context,dark),
-                        new CenterCrop(context))
-                .into(new ViewTarget<View,GlideDrawable>(view) {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                        attachViewPic(view,resource);
-                    }
-                });
+        if(!CommonUtils.isActivityDestroy(context)){
+            Glide.with(context)
+                    .load(url)
+                    .bitmapTransform(new BlurTransformation(context,radius),
+                            new DarkBitmap(context,dark),
+                            new CenterCrop(context))
+                    .into(new ViewTarget<View,GlideDrawable>(view) {
+                        @Override
+                        public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                            attachViewPic(view,resource);
+                        }
+                    });
+        }
     }
 
     private static void attachViewPic(View view,Drawable resource) {
@@ -76,27 +79,29 @@ public class BitmapUtils {
                                     boolean dark,
                                     int defaultId){
         Context context = view.getContext();
-        Glide.with(context)
-                .load(music)
-                .bitmapTransform(new BlurTransformation(context,blurRadius),
-                        new DarkBitmap(context,dark),
-                        new CenterCrop(context))
-                .error(defaultId)
-                .placeholder(defaultId)
-                .into(new ViewTarget<View,GlideDrawable>(view) {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource,
-                                                GlideAnimation<? super GlideDrawable> glideAnimation) {
-                        attachViewPic(view,resource);
-                    }
+        if(!CommonUtils.isActivityDestroy(context)){
+            Glide.with(context)
+                    .load(music)
+                    .bitmapTransform(new BlurTransformation(context,blurRadius),
+                            new DarkBitmap(context,dark),
+                            new CenterCrop(context))
+                    .error(defaultId)
+                    .placeholder(defaultId)
+                    .into(new ViewTarget<View,GlideDrawable>(view) {
+                        @Override
+                        public void onResourceReady(GlideDrawable resource,
+                                                    GlideAnimation<? super GlideDrawable> glideAnimation) {
+                            attachViewPic(view,resource);
+                        }
 
-                    //需要重写该方法，因为加载失败的情况下，ViewTarget是不会有任何操作的，因为她不知道怎么处理
-                    @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        super.onLoadFailed(e, errorDrawable);
-                        attachViewPic(view,errorDrawable);
-                    }
-                });
+                        //需要重写该方法，因为加载失败的情况下，ViewTarget是不会有任何操作的，因为她不知道怎么处理
+                        @Override
+                        public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                            super.onLoadFailed(e, errorDrawable);
+                            attachViewPic(view,errorDrawable);
+                        }
+                    });
+        }
     }
 
     public static <Y extends Target<Bitmap>> void loadMusicPicBitmapType(@NonNull MusicEntity music,
@@ -105,16 +110,18 @@ public class BitmapUtils {
                                                                       @IntRange(from = 1, to = 25) int blurRadius,
                                                                       boolean dark,
                                                                       int defaultId,Y target){
-        Glide.with(context)
-                .load(music)
-                .asBitmap()
-                .override(width,height)
-                .transform(new BlurTransformation(context,blurRadius),
-                        new DarkBitmap(context,dark),
-                        new CenterCrop(context))
-                .error(defaultId)
-                .placeholder(defaultId)
-                .into(target);
+        if(!CommonUtils.isActivityDestroy(context)){
+            Glide.with(context)
+                    .load(music)
+                    .asBitmap()
+                    .override(width,height)
+                    .transform(new BlurTransformation(context,blurRadius),
+                            new DarkBitmap(context,dark),
+                            new CenterCrop(context))
+                    .error(defaultId)
+                    .placeholder(defaultId)
+                    .into(target);
+        }
     }
 
     /**

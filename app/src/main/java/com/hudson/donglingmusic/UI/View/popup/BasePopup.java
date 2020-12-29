@@ -1,6 +1,7 @@
 package com.hudson.donglingmusic.UI.View.popup;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
@@ -13,7 +14,9 @@ public abstract class BasePopup {
 
     public BasePopup(Context context){
         mPopupWindow = new PopupWindow(initView(context), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mPopupWindow.setFocusable(true);
+        //在android5.x机型上需要添加这个才能点击外部关闭，否则会导致页面卡住
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
     }
 

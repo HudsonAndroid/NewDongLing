@@ -1,7 +1,7 @@
 package com.hudson.donglingmusic.service.exception;
 
 import com.hudson.donglingmusic.R;
-import com.hudson.donglingmusic.Utils.CommonUtils;
+import com.hudson.donglingmusic.common.Utils.CommonUtils;
 
 /**
  * Created by Hudson on 2019/1/20.

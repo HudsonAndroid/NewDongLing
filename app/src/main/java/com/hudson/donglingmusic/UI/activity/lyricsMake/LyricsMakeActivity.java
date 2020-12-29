@@ -2,7 +2,6 @@ package com.hudson.donglingmusic.UI.activity.lyricsMake;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 
 import com.hudson.donglingmusic.R;
@@ -26,7 +24,7 @@ import com.hudson.donglingmusic.UI.View.GuideLayout.step.lyricsMake.LyricsMakeSt
 import com.hudson.donglingmusic.UI.View.PlayProgressView.IProgressView;
 import com.hudson.donglingmusic.UI.View.PlayProgressView.PlayProgressManager;
 import com.hudson.donglingmusic.UI.View.SpanClickTextView;
-import com.hudson.donglingmusic.UI.activity.BaseNonBindActivity;
+import com.hudson.donglingmusic.UI.activity.BasePlayActivity;
 import com.hudson.donglingmusic.UI.activity.PlayPageActivity;
 import com.hudson.donglingmusic.UI.activity.lyricsMake.makePage.LyricsMakeController;
 import com.hudson.donglingmusic.UI.activity.lyricsMake.makePage.ReadyState;
@@ -34,6 +32,7 @@ import com.hudson.donglingmusic.UI.adapter.LyricsMakeAdapter;
 import com.hudson.donglingmusic.UI.recyclerview.TopLinearLayoutManager;
 import com.hudson.donglingmusic.common.Utils.ToastUtils;
 import com.hudson.donglingmusic.common.config.ConfigManager;
+import com.hudson.donglingmusic.service.IPlayerController;
 import com.hudson.donglingmusic.service.playState.IState;
 import com.hudson.donglingmusic.service.playState.LoopOneState;
 
@@ -42,7 +41,7 @@ import java.util.Arrays;
 /**
  * Created by Hudson on 2020/3/10.
  */
-public class LyricsMakeActivity extends BaseNonBindActivity {
+public class LyricsMakeActivity extends BasePlayActivity {
     private static final String KEY_GUIDE_MAKE_LYRICS = "guide_lyrics_make";
     private IProgressView mProgressView;
     private SpanClickTextView mCreateLyrics;
@@ -50,20 +49,14 @@ public class LyricsMakeActivity extends BaseNonBindActivity {
     private LyricsMakeController mLyricsMaker;
     private LyricsMakeAdapter mAdapter;
     private IState mPrePlayState;
-    private View mEidt;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        super.onCreate(savedInstanceState);
-    }
+    private View mEdit;
 
     @Override
     protected void initView(ConstraintLayout parent) {
         LayoutInflater.from(this).inflate(R.layout.activity_lyrics_make,parent);
         mProgressView = (IProgressView) parent.findViewById(R.id.ppsb_seek);
-        mEidt = parent.findViewById(R.id.iv_edit);
-        mEidt.setOnClickListener(new View.OnClickListener() {
+        mEdit = parent.findViewById(R.id.iv_edit);
+        mEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LyricsInputActivity.start(LyricsMakeActivity.this,mAdapter.getAllLyrics());
@@ -74,11 +67,12 @@ public class LyricsMakeActivity extends BaseNonBindActivity {
         LinearLayoutManager layoutManager = new TopLinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new LyricsMakeAdapter();
+        recyclerView.setAdapter(mAdapter);
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mAdapter = new LyricsMakeAdapter(recyclerView.getHeight() / 2);
-                recyclerView.setAdapter(mAdapter);
+                mAdapter.setHalfHeight(recyclerView.getHeight() / 2);
             }
         });
         mLyricsMaker = new LyricsMakeController(recyclerView);
@@ -131,17 +125,12 @@ public class LyricsMakeActivity extends BaseNonBindActivity {
     }
 
     @Override
-    protected void prepare() {
-        super.prepare();
+    public void onPlayerControllerInitSuccess(IPlayerController controller) {
+        super.onPlayerControllerInitSuccess(controller);
         if(mPlayerController == null || mPlayerController.getCurMusic() == null){
             ToastUtils.showToast(R.string.common_music_invalid);
             finish();
         }
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
         mPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,7 +197,7 @@ public class LyricsMakeActivity extends BaseNonBindActivity {
                     }else{
                         mLyricsMaker.applyLyricsModify();
                     }
-                    mEidt.setVisibility(View.VISIBLE);
+                    mEdit.setVisibility(View.VISIBLE);
                 }
             }
         }

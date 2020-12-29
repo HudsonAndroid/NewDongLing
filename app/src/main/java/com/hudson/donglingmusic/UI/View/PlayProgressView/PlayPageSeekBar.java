@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.hudson.donglingmusic.R;
 import com.hudson.donglingmusic.common.Utils.TimeUtils;
+import com.hudson.donglingmusic.global.DongLingApplication;
 import com.hudson.donglingmusic.service.IPlayerController;
-import com.hudson.donglingmusic.service.musicController.MusicController;
 
 /**
  * Created by Hudson on 2020/3/7.
@@ -48,7 +48,7 @@ public class PlayPageSeekBar extends ConstraintLayout implements IProgressView {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                IPlayerController controller = MusicController.getController();
+                IPlayerController controller = DongLingApplication.getPlayerController();
                 if(controller != null){
                     controller.seekTo((int) (seekBar.getProgress() * 1.0f / MAX_PROGRESS * mMusicDuration));
                 }

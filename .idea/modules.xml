@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../DongLingPlayer/donglingplayer/DongLingPlayer-donglingplayer.iml" filepath="$PROJECT_DIR$/../DongLingPlayer/donglingplayer/DongLingPlayer-donglingplayer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../NewCirlceVisibleMusicView/circlevisiblemusicview/NewCirlceVisibleMusicView-circlevisiblemusicview.iml" filepath="$PROJECT_DIR$/../NewCirlceVisibleMusicView/circlevisiblemusicview/NewCirlceVisibleMusicView-circlevisiblemusicview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NewDongLing.iml" filepath="$PROJECT_DIR$/NewDongLing.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/NewDongLing-app.iml" filepath="$PROJECT_DIR$/app/NewDongLing-app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/musicentitylib/NewDongLing-musicentitylib.iml" filepath="$PROJECT_DIR$/musicentitylib/NewDongLing-musicentitylib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../NewLyricsView/LyricsView/NewLyricsView-LyricsView.iml" filepath="$PROJECT_DIR$/../NewLyricsView/LyricsView/NewLyricsView-LyricsView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/musicentitylib/musicentitylib.iml" filepath="$PROJECT_DIR$/musicentitylib/musicentitylib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/projects-NewDongLing.iml" filepath="$PROJECT_DIR$/projects-NewDongLing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LyricsView/LyricsView.iml" filepath="$PROJECT_DIR$/LyricsView/LyricsView.iml" group="NewDongLing/LyricsView" />
+      <module fileurl="file://$PROJECT_DIR$/NewDongLing.iml" filepath="$PROJECT_DIR$/NewDongLing.iml" group="NewDongLing" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="NewDongLing/app" />
+      <module fileurl="file://$PROJECT_DIR$/circlevisiblemusicview/circlevisiblemusicview.iml" filepath="$PROJECT_DIR$/circlevisiblemusicview/circlevisiblemusicview.iml" group="NewDongLing/circlevisiblemusicview" />
+      <module fileurl="file://$PROJECT_DIR$/donglingplayer/donglingplayer.iml" filepath="$PROJECT_DIR$/donglingplayer/donglingplayer.iml" group="NewDongLing/donglingplayer" />
     </modules>
   </component>
 </project>

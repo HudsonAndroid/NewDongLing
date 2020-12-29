@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 28
@@ -7,7 +8,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -16,6 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+greendao {
+    schemaVersion 2//数据库版本号
+    daoPackage 'com.hudson.dongling.db.gen'//设置DaoMaster、DaoSession、Dao包名
+    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+    //targetGenDirTest：设置生成单元测试目录
+    //generateTests：设置自动生成单元测试用例
 }
 
 dependencies {
@@ -27,13 +36,24 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':musicentitylib')
+//    implementation project(':musicentitylib')
 //    implementation project(path: ':donglingplayer', configuration:'default')
 //    implementation project(path: ':circlevisiblemusicview', configuration:'default')
 //    implementation project(path: ':LyricsView', configuration:'default')
     implementation project(':donglingplayer')
     implementation project(':circlevisiblemusicview')
     implementation project(':LyricsView')
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.0.7'
+    implementation('io.reactivex:rxandroid:1.2.1')
+    implementation('io.reactivex:rxjava:1.2.5')
+    implementation 'com.github.tbruyelle:rxpermissions:0.7.0'
+    implementation 'org.greenrobot:greendao:3.2.0'
+//    数据库升级工具
+    implementation 'io.github.yuweiguocn:GreenDaoUpgradeHelper:v2.2.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'jp.wasabeef:glide-transformations:2.0.2'
+    implementation 'com.danikula:videocache:2.7.1'
+    implementation files('libs/juniversalchardet-1.0.3.jar')
+    compile 'com.jaeger.statusbarutil:library:1.4.0'
+    implementation 'com.github.ai2101039:YLCircleImageView:v1.0.6'
 }

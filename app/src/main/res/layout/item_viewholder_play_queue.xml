@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_normal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/common_text_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintWidth_percent="0.6"
+        android:paddingLeft="@dimen/space_normal"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/tv_artist"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        android:textColor="@color/common_light_gray"
+        android:textSize="@dimen/small_text_size"
+        android:maxLines="1"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintLeft_toRightOf="@id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/space_normal"
+        android:src="@drawable/icon_close_gray"
+        android:layout_width="@dimen/space_large"
+        android:layout_height="@dimen/space_large"/>
+
+</android.support.constraint.ConstraintLayout>

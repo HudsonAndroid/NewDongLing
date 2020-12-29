@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 应用引导ViewGroup
- * Created by hpz on 2019/3/1.
+ * Created by Hudson on 2019/3/1.
  */
 public class AppGuideLayout extends GuideLayout {
     private int mCurrentStep;//当前的步骤，0表示尚未开始

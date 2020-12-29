@@ -1,22 +1,16 @@
 package com.hudson.donglingmusic.UI.activity;
 
 import android.Manifest;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,20 +23,16 @@ import com.hudson.donglingmusic.common.Utils.CommonUtils;
 import com.hudson.donglingmusic.common.Utils.ToastUtils;
 import com.hudson.donglingmusic.common.Utils.bitmapUtils.BitmapUtils;
 import com.hudson.donglingmusic.common.config.ConfigManager;
-import com.hudson.donglingmusic.controller.ModuleManager;
 import com.hudson.donglingmusic.entity.MusicEntity;
+import com.hudson.donglingmusic.global.DongLingApplication;
 import com.hudson.donglingmusic.module.skin.manager.OnSkinLoadCompleteListener;
 import com.hudson.donglingmusic.module.skin.manager.SkinManager;
-import com.hudson.donglingmusic.persistent.db.DbModuleImpl;
 import com.hudson.donglingmusic.service.IPlayerController;
-import com.hudson.donglingmusic.service.MusicService;
 import com.hudson.donglingmusic.service.listener.OnMusicChangedListener;
-import com.hudson.donglingmusic.service.musicController.MusicController;
 import com.jaeger.library.StatusBarUtil;
 
 public class HomeActivity extends BasePlayActivity
         implements OnMusicChangedListener, OnSkinLoadCompleteListener, View.OnClickListener {
-    private ServiceConnectionEntity mConn;
     private TextView mTitle,mDesc;
     private ImageView mImg;
     private HomeFirstPage mHomeFirstPage;
@@ -58,7 +48,6 @@ public class HomeActivity extends BasePlayActivity
             //低版本的话，把状态栏设置为黑色，避免状态栏看不清楚
             StatusBarUtil.setColor(this, Color.BLACK);
         }
-        bindService(this);
         SkinManager.getInstance().addSkinLoadCompleteListener(this);
     }
 
@@ -88,10 +77,12 @@ public class HomeActivity extends BasePlayActivity
         findViewById(R.id.iv_play_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mPlayerController.getPlayList().size() > 0){
-                    PlayQueueActivity.start(HomeActivity.this);
-                }else{
-                    ToastUtils.showToast(R.string.common_play_list_empty);
+                if(mPlayerController != null){
+                    if(mPlayerController.getPlayList().size() > 0){
+                        PlayQueueActivity.start(HomeActivity.this);
+                    }else{
+                        ToastUtils.showToast(R.string.common_play_list_empty);
+                    }
                 }
             }
         });
@@ -133,18 +124,6 @@ public class HomeActivity extends BasePlayActivity
         drawer.closeDrawer(GravityCompat.START);
     }
 
-    private void bindService(Context context){
-        Intent intent = new Intent(context, MusicService.class);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //android8.0以上通过startForegroundService启动service
-            startForegroundService(intent);
-        }else{
-            startService(intent);
-        }
-        mConn = new ServiceConnectionEntity();
-        context.bindService(intent, mConn,BIND_AUTO_CREATE);
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,32 +143,14 @@ public class HomeActivity extends BasePlayActivity
             }
             mTitle.setText(curMusic.getTitle());
             mDesc.setText(curMusic.getAlbumTitle());
-//            MusicPicUtils.loadMusicPic(curMusic,mImg);
             BitmapUtils.loadMusicPic(curMusic,mImg);
         }
     }
 
-    private class ServiceConnectionEntity implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.e("hudson2","服务绑定成功");
-            mPlayerController = (IPlayerController) service;
-            mPlayerController.addMusicChangedListener(HomeActivity.this);
-            MusicController.init(mPlayerController);
-            init();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            if(mPlayerController != null){
-                mPlayerController.removeMusicChangedListener(HomeActivity.this);
-            }
-        }
-    }
-
-    private void init(){
-        if(mPlayerController.getCurMusic() != null){
+    @Override
+    public void onPlayerControllerInitSuccess(IPlayerController controller) {
+        super.onPlayerControllerInitSuccess(controller);
+        if(controller.getCurMusic() != null){
             mBottomGroup.setVisibility(View.VISIBLE);
         }else{
             mBottomGroup.setVisibility(View.GONE);
@@ -205,17 +166,16 @@ public class HomeActivity extends BasePlayActivity
     }
 
     private void exit(){
-        ((DbModuleImpl)ModuleManager.getDbModule()).close();
-        mPlayerController.stop();
+        if(mPlayerController != null){
+            mPlayerController.stop();
+        }
         finish();
-        android.os.Process.killProcess(android.os.Process.myPid());
+        DongLingApplication.exit();
     }
 
     @Override
     protected void onDestroy() {
         mHomeFirstPage.onDestroy();
-        unbindService(mConn);
-        mConn = null;
         super.onDestroy();
     }
 

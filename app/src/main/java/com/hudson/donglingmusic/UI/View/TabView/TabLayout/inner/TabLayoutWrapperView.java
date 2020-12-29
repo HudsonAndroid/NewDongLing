@@ -7,9 +7,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
+import com.hudson.donglingmusic.UI.View.TabView.TabLayout.inner.tab.BasePagerTabItem;
+
 /**
  * TabLayout的封装，基于BaseTabItem
- * Created by hpz on 2018/11/5.
+ * Created by Hudson on 2018/11/5.
  */
 public class TabLayoutWrapperView extends TabLayout {
     private OnTabItemSelectedListener mOnTabItemSelectedListener;
@@ -24,6 +26,8 @@ public class TabLayoutWrapperView extends TabLayout {
 
     public TabLayoutWrapperView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setTabMode(TabLayout.MODE_FIXED);
+        setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
     /**

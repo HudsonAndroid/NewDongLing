@@ -5,7 +5,7 @@ import android.graphics.Paint;
 
 /**
  * 矩形高亢区域
- * Created by hpz on 2019/2/25.
+ * Created by Hudson on 2019/2/25.
  */
 public class RectShape implements IShape {
     @Override

@@ -13,7 +13,7 @@ import com.hudson.donglingmusic.UI.View.GuideLayout.shape.RoundRectShape;
 
 /**
  * 高亢显示部分实例
- * Created by hpz on 2019/2/25.
+ * Created by Hudson on 2019/2/25.
  */
 public class FocusEntity {
     private View mView;//用于承载区域的控件,由于控件本身绘制可能未完成，需要使用view作为成员

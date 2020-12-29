@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/iv_menu"
+        android:visibility="gone"
+        android:src="@drawable/icon_menu"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_marginRight="@dimen/space_normal"
+        app:layout_constraintRight_toLeftOf="@+id/tl_tab_header"
+        app:layout_constraintTop_toTopOf="@+id/tl_tab_header"
+        app:layout_constraintBottom_toBottomOf="@+id/tl_tab_header"
+        android:padding="@dimen/space_little"
+        android:layout_width="@dimen/height_small"
+        android:layout_height="@dimen/height_small"/>
+
     <com.hudson.donglingmusic.UI.View.TabView.TabLayout.inner.TabLayoutWrapperView
         android:id="@+id/tl_tab_header"
-        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/iv_menu"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="0dp"
+        app:tabTextColor="@color/tab_layout_normal"
+        app:tabSelectedTextColor="@color/tab_layout_select"
+        app:tabIndicatorColor="@color/tab_layout_select"
+        android:layout_marginRight="@dimen/space_normal"
         android:layout_height="@dimen/normal_header_height"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
+        app:layout_constraintTop_toBottomOf="@id/tl_tab_header"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="0dp"/>
+</android.support.constraint.ConstraintLayout>

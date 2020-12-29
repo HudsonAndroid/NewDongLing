@@ -8,6 +8,7 @@ import com.hudson.donglingmusic.UI.Item.ViewHolder.lyricsMake.BaseLyricsMakeView
 import com.hudson.donglingmusic.UI.Item.ViewHolder.lyricsMake.EmptyViewHolder;
 import com.hudson.donglingmusic.UI.Item.ViewHolder.lyricsMake.LyricsMakeViewHolder;
 import com.hudson.donglingmusic.UI.activity.lyricsMake.LyricsInputActivity;
+import com.hudson.donglingmusic.common.Utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,14 @@ public class LyricsMakeAdapter extends RecyclerView.Adapter<BaseLyricsMakeViewHo
         mDatas.clear();
         mDatas.addAll(datas);
         notifyDataSetChanged();
+    }
+
+    public void setHalfHeight(int halfHeight){
+        mHalfHeight = halfHeight;
+    }
+
+    public LyricsMakeAdapter(){
+        this(CommonUtils.getScreenHeight() / 3);
     }
 
     public LyricsMakeAdapter(int halfHeight) {

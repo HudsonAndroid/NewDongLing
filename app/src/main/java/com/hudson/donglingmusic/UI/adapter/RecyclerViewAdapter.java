@@ -1,6 +1,6 @@
 package com.hudson.donglingmusic.UI.adapter;
 
-import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -11,16 +11,11 @@ import java.util.List;
 
 /**
  * RecyclerView的统一adapter
- * Created by hpz on 2018/5/11.
+ * Created by Hudson on 2018/5/11.
  */
 
 public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<AbsViewHolder<T>> {
-    protected List<T> mDatas = new ArrayList<>();
-    protected Context mContext;
-
-    protected RecyclerViewAdapter(Context context){
-        mContext = context;
-    }
+    protected final List<T> mDatas = new ArrayList<>();
 
     public void refreshList(List<T> datas){
         mDatas.clear();
@@ -28,9 +23,14 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<AbsVie
         notifyDataSetChanged();
     }
 
+    @NonNull
+    public List<T> getDatas(){
+        return mDatas;
+    }
+
     @Override
     public AbsViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return getViewHolder(mContext,parent);
+        return getViewHolder(parent);
     }
 
     @Override
@@ -43,5 +43,5 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<AbsVie
         return mDatas.size();
     }
 
-    protected abstract AbsViewHolder<T> getViewHolder(Context context,ViewGroup parent);
+    protected abstract AbsViewHolder<T> getViewHolder(ViewGroup parent);
 }

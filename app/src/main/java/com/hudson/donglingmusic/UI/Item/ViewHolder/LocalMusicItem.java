@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.hudson.donglingmusic.R;
 import com.hudson.donglingmusic.UI.Item.OnItemClickListener;
-import com.hudson.musicentitylib.MusicEntity;
+import com.hudson.donglingmusic.entity.MusicEntity;
 
 /**
  * Created by Hudson on 2019/1/5.

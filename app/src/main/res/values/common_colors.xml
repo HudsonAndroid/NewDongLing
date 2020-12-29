@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="common_text_color">#333333</color>
+    <color name="common_light_gray">#666666</color>
+    <color name="common_white">#FAFAFA</color>
+    <color name="common_light_white">#ececec</color>
+    <color name="common_transparent_activity_bg">#22000000</color>
+    <color name="common_error">#c03939</color>
+    <color name="common_lyrics_make_complete">#fff</color>
+    <color name="common_lyrics_make_normal">#aaffffff</color>
 </resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_network_invalid">网络不可用，请检查网络设置！</string>
+    <string name="common_song_sheet_invalid">歌单无效！</string>
+    <string name="common_local_song_empty">本地歌曲是空的</string>
+    <string name="common_play_invalid">请选择歌曲播放后操作</string>
+    <string name="common_play_list_empty">当前播放列表为空！</string>
+    <string name="common_lyrics_empty">歌词为空！</string>
+    <string name="common_lyrics_time_invalid">当前歌词时间不能小于上一句歌词哦</string>
+    <string name="common_music_invalid">错误，当前音乐不正常</string>
+    <string name="lyrics_input_failed_empty">抱歉，当前歌曲并不存在歌词</string>
+    <string name="common_song_sheet_play_empty">抱歉，当前歌单没有歌曲</string>
+    <string name="common_no_permission_for_visible_music">抱歉，权限被拒绝，无法使用可视化音乐</string>
+    <string name="common_skin_path_is_empty">皮肤包资源不存在</string>
+    <string name="common_skin_resource_load_failed">皮肤包资源加载失败</string>
+    <string name="error_bind_service">错误，无法绑定播放器，应用自动退出</string>
+</resources>

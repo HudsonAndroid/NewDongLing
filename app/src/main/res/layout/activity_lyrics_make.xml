@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/default_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.hudson.donglingmusic.UI.View.BackView
+        android:id="@+id/bv_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_edit"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/bv_back"
+        app:layout_constraintBottom_toBottomOf="@id/bv_back"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/space_normal"
+        android:src="@drawable/icon_edit_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_activity_title"
+        app:layout_constraintTop_toTopOf="@id/bv_back"
+        app:layout_constraintBottom_toBottomOf="@id/bv_back"
+        app:layout_constraintLeft_toRightOf="@id/bv_back"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:textSize="@dimen/large_more_text_size"
+        android:text="@string/name_edit_lyrics"
+        android:textColor="@color/common_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_restart"
+        android:src="@drawable/selector_lyrics_make_restart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/space_large"
+        app:layout_constraintRight_toLeftOf="@+id/iv_play"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_play"
+        android:src="@drawable/lyrics_make_play"
+        app:layout_constraintBottom_toBottomOf="@id/iv_restart"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/iv_restart"
+        app:layout_constraintRight_toLeftOf="@+id/iv_complete"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_complete"
+        android:src="@drawable/selector_lyrics_make_complete"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/iv_play"
+        app:layout_constraintBottom_toBottomOf="@id/iv_restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_backward"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_restart"
+        android:layout_marginBottom="@dimen/space_large"
+        android:src="@drawable/selector_lyrics_make_backward"
+        app:layout_constraintRight_toLeftOf="@+id/iv_pre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_pre"
+        android:src="@drawable/selector_lyrics_make_pre"
+        app:layout_constraintLeft_toRightOf="@id/iv_backward"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backward"
+        app:layout_constraintRight_toLeftOf="@id/iv_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:src="@drawable/selector_lyrics_make_next"
+        app:layout_constraintLeft_toRightOf="@id/iv_pre"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backward"
+        app:layout_constraintRight_toLeftOf="@id/iv_forward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_forward"
+        android:src="@drawable/selector_lyrics_make_forward"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backward"
+        app:layout_constraintLeft_toRightOf="@id/iv_next"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.hudson.donglingmusic.UI.View.PlayProgressView.PlayPageSeekBar
+        android:id="@+id/ppsb_seek"
+        app:layout_constraintBottom_toTopOf="@id/iv_backward"
+        android:layout_marginBottom="@dimen/space_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list"
+        app:layout_constraintTop_toBottomOf="@id/bv_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ppsb_seek"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/space_normal"
+        android:layout_height="0dp"/>
+
+    <com.hudson.donglingmusic.UI.View.SpanClickTextView
+        android:id="@+id/tv_filter_lyrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/common_white"
+        app:layout_constraintTop_toTopOf="@id/rv_list"
+        app:layout_constraintLeft_toLeftOf="@id/rv_list"
+        app:layout_constraintRight_toRightOf="@id/rv_list"
+        app:layout_constraintBottom_toBottomOf="@id/rv_list" />
+
+</android.support.constraint.ConstraintLayout>

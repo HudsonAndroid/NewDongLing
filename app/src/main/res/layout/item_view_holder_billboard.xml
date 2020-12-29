@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/space_little"
+    android:layout_marginRight="@dimen/space_little"
+    android:layout_marginTop="@dimen/space_little"
+    android:paddingBottom="@dimen/space_normal"
+    android:background="@drawable/selector_hot_item_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_normal"
+        android:text="@string/app_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="@color/common_text_color"
+        android:textSize="@dimen/large_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        android:layout_marginRight="@dimen/space_large"
+        android:src="@drawable/icon_arrow_right"
+        android:layout_width="@dimen/space_large"
+        android:layout_height="@dimen/space_large"/>
+
+    <ImageView
+        android:id="@+id/iv_first"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/iv_second"
+        android:layout_marginTop="@dimen/space_normal"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/tv_first_listen"
+        android:textSize="@dimen/small_text_size"
+        android:background="@drawable/gedan_listen_count_bg"
+        app:layout_constraintRight_toRightOf="@id/iv_first"
+        app:layout_constraintTop_toTopOf="@id/iv_first"
+        android:drawableLeft="@drawable/icon_fire"
+        android:drawablePadding="@dimen/space_slight"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_first_song"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintTop_toBottomOf="@id/iv_first"
+        app:layout_constraintLeft_toLeftOf="@id/iv_first"
+        app:layout_constraintRight_toRightOf="@id/iv_first"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/common_text_color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_second"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toRightOf="@id/iv_first"
+        app:layout_constraintRight_toLeftOf="@+id/iv_third"
+        android:layout_marginTop="@dimen/space_normal"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/tv_second_listen"
+        android:textSize="@dimen/small_text_size"
+        android:background="@drawable/gedan_listen_count_bg"
+        app:layout_constraintRight_toRightOf="@id/iv_second"
+        app:layout_constraintTop_toTopOf="@id/iv_second"
+        android:drawableLeft="@drawable/icon_fire"
+        android:drawablePadding="@dimen/space_slight"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_second_song"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintTop_toBottomOf="@id/iv_second"
+        app:layout_constraintLeft_toLeftOf="@id/iv_second"
+        app:layout_constraintRight_toRightOf="@id/iv_second"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/common_text_color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_third"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/iv_second"
+        android:layout_marginTop="@dimen/space_normal"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/tv_third_listen"
+        android:textSize="@dimen/small_text_size"
+        android:background="@drawable/gedan_listen_count_bg"
+        app:layout_constraintRight_toRightOf="@id/iv_third"
+        app:layout_constraintTop_toTopOf="@id/iv_third"
+        android:drawableLeft="@drawable/icon_fire"
+        android:drawablePadding="@dimen/space_slight"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_third_song"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintTop_toBottomOf="@id/iv_third"
+        app:layout_constraintLeft_toLeftOf="@id/iv_third"
+        app:layout_constraintRight_toRightOf="@id/iv_third"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/common_text_color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+</android.support.constraint.ConstraintLayout>
