@@ -55,7 +55,7 @@ public class NotifyHelper implements OnMusicChangedListener {
             NotificationChannel channel = new NotificationChannel(
                     mChannelId,
                     resources.getString(R.string.notify_name_music_play),
-                    NotificationManager.IMPORTANCE_HIGH);
+                    NotificationManager.IMPORTANCE_DEFAULT);
             mNotificationManager.createNotificationChannel(channel);
         }
         mNotificationImgDimen = CommonUtils.dp2px(NOTIFICATION_IMG_DIMEN);

@@ -106,7 +106,7 @@ public class HomeActivity extends BasePlayActivity
     public void onClick(View v){
         int id = v.getId();
         if(id == R.id.tv_skin){
-            SkinManager.getInstance().loadSkin(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+"donglingMusic/"+"buleskin.skin");
+            SkinManager.getInstance().loadSkin(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+"donglingMusic/"+"nightskin.skin");
         }else if(id == R.id.tv_display_setting){
 
         }else if(id == R.id.tv_lyrics_setting){
