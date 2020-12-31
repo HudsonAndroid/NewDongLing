@@ -19,6 +19,7 @@ donglingMusic文件夹中（注意：Android11系统不支持直接操作外部�
 ## 大致UI展示
 ![竖直歌词](resource/vertical.gif)
 ![水平歌词](resource/horizontal.gif)
+
 <img src="resource/day_list.jpg" width="320" alt="白天模式"/>  <img src="resource/night_list.png" width="320" alt="夜间模式"/>
 <img src="resource/horizontal_lyrics.jpg" width="320" alt="水平歌词"/>  <img src="resource/vertical_lyrics.jpg" width="320" alt="竖直歌词"/>
 <img src="resource/play_page.png" width="320" alt="没有歌词及圆形wave自定义控件"/>
